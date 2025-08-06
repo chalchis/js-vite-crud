@@ -55,18 +55,16 @@ export const renderTable = ( element ) => {
 	//agregar los usuarios a la tabla
 	for (const user of users) 
 	{
+		//crear una fila por cada usuario
 		tableBody += `<tr>
 			<td>${ user.id }</td>
 			<td>
-				<div class="avatar" style="background-image: url('https://avatar.iran.liara.run/username?username=${user.firtsName}+${user.lastName}')"></div>
+				<div class="avatar" style="background-image: url('https://i.pravatar.cc/300/${user.firtsName}')"></div>
 			</td>
 			<td>${ user.firtsName }</td>
 			<td>${ user.lastName }</td>
 			<td>
-				${ user.isActive 
-					? `<span class="active">Active</span>` 
-					: `<span class="inactive">Inactive</span>` 
-				}
+				${ user.isActive ? `<span class="active">Active</span>` : `<span class="inactive">Inactive</span>` }
 			</td>
 			<td>
 				
