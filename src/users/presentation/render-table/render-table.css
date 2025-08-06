@@ -1,0 +1,35 @@
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-family: Arial, sans-serif;
+}
+
+.custom-table th, .custom-table td {
+    border: 1px solid #4123c9;
+    padding: 8px;
+    text-align: left;
+}
+
+.custom-table th {
+    background-color: #612cc5;
+    color: #f0ecec;
+}
+
+.custom-table tr:nth-child(even) {
+    background-color: #9b9a9c;
+    color: black;
+}
+
+.custom-table tr:hover {
+    background-color: #4123c9;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%; /* Para forma circular */
+    display: inline-block;
+}
