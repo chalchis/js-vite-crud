@@ -1,0 +1,35 @@
+/* Contenedor principal - Debajo de la tabla */
+.pagination-container {
+   display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap; /* Para responsive en pantallas pequeñas */
+}
+
+/* Estilo base para botones */
+.pagination-container button {
+    padding: 8px 16px;
+    margin: 0 5px;
+    background-color: #6d07f1;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.pagination-container button:hover {
+    background-color: #18055e;
+}
+
+/* Indicador de página */
+#current-page {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 0 10px;
+    font-weight: bold;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+}

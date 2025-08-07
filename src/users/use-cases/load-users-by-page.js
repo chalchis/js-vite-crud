@@ -1,4 +1,5 @@
 import { localhostUserToModel } from "../mappers/localhost-user-mapper";
+import { apiCache } from "../models/api-cache";
 
 export const loadUsersByPage = async ( page = 1 ) => {
 
@@ -18,8 +19,15 @@ export const loadUsersByPage = async ( page = 1 ) => {
 		//data completa
 		const res = await response.json();
 
+		console.log(res);
+
 		//crear un nuevo array de usuarios
 		const usersData = res.data.map( user => localhostUserToModel(user) );
+
+		// 2. Actualiza el caché con valores crudos
+        apiCache.items = res.items;
+        apiCache.last = res.last;
+        apiCache.pages = res.pages;
 
 		//console.log('----Users loaded:', usersData);
 

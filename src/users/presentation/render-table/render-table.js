@@ -42,7 +42,7 @@ export const renderTable = ( element ) => {
 	let tableBody = '';
 
 	//usuarios que tenemos en el store
-	const users = usersStore.getUsers();
+	const users = usersStore.getUsers();	
 
 	//si no existe la tabla, crearla
 	if ( !table )
@@ -67,8 +67,8 @@ export const renderTable = ( element ) => {
 				${ user.isActive ? `<span class="active">Active</span>` : `<span class="inactive">Inactive</span>` }
 			</td>
 			<td>
-				
-				<button class="btn btn-danger">Delete</button>
+				<a href="#/edit/${user.id}" class="edit-button">Edit</a> |
+				<a href="#/delete/${user.id}" class="delete-button">Delete</a>
 			</td>
 		</tr>`;
 	}
