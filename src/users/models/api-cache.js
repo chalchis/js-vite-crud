@@ -1,10 +1,14 @@
 
-export class ApiCache 
+class ApiCache 
 {
 	static instance;
 	
 	/**
-	 * @param {Object} config - Configuración inicial (opcional)
+	 * 
+	 * @param {*} numItems 
+	 * @param {*} last 
+	 * @param {*} pages 
+	 * @returns 
 	 */
 	constructor( numItems, last, pages ) 
 	{

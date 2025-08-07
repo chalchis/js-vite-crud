@@ -34,7 +34,7 @@ export const renderButtons = ( element ) => {
 		console.log(usersStore.getCurrentPage());
 
 		//verificar si hay mas paginas
-		if ( usersStore.getCurrentPage() <= apiCache.pages )
+		if ( usersStore.getCurrentPage() < apiCache.pages )
 		{
 			await usersStore.loadNextPage();
 			currentPageLabel.innerText = usersStore.getCurrentPage();
@@ -42,6 +42,7 @@ export const renderButtons = ( element ) => {
 		}
 	});
 
+	//evento click del boton prev
 	prevButton.addEventListener('click', async () => {
 
 		//verificar si hay paginas anteriores
