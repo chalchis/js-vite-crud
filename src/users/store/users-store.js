@@ -19,13 +19,15 @@ const loadNextPage = async () => {
 
 const loadPreiousPage = async () => {
 
+	//termina si estamos en la primera pagina
+	if ( state.currenPage <= 1 ) return;
+
+	//cargar usuarios
 	const users = await loadUsersByPage( state.currenPage - 1 );
 
 	//termina si no hay usuarios
 	if ( users.length === 0 ) return;
 
-	//termina si estamos en la primera pagina
-	if ( state.currenPage <= 1 ) return;
 
 	//actualizar
 	state.currenPage = state.currenPage - 1;
