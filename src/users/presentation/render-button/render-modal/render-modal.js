@@ -59,6 +59,7 @@ const setupModalEvents = ( dialogElement ) => {
 	//referenciar desde el dialog
 	const closeBtn = dialogElement.querySelector('.dialog-btn-close');
 	const cancelBtn = dialogElement.querySelector('.dialog-btn-secondary');
+	const formDialog = dialogElement.querySelector('form');
 
 	//evento-----------------------------------------------------------
 
@@ -97,7 +98,9 @@ const setupModalEvents = ( dialogElement ) => {
 
 	//hacer click fuera del dialog
 	dialogElement.addEventListener('click', (event) => {
-
+		
+    	// 1. El clic fue directamente en el elemento <dialog> (no en sus hijos) y
+    	// 2. El diálogo está actualmente abierto como modal
 		if (event.target === dialogElement && dialogElement.open)
 		{
 			//resetar inputs
@@ -106,6 +109,16 @@ const setupModalEvents = ( dialogElement ) => {
 			//metodo nativo para cerrar un dialog
 			dialogElement.close()
 		}
+	});
+
+	//evento-----------------------------------------------------------
+
+	//evitar submit
+	formDialog.addEventListener('submit', (event) => {
+
+		//evitar submit
+		event.preventDefault();
+		
 	});
 };
 

@@ -5,31 +5,33 @@
       <button class="dialog-btn-close" aria-label="Cerrar diálogo">&times;</button>
     </header>
     
-    <main class="dialog-content">
-      <div class="input-group">
-    <input type="text" class="dialog-input" id="firstName" autocomplete="off" placeholder=" " required>
-    <label for="firstName" class="input-label">First Name</label>
-  </div>
-  
-  <div class="input-group">
-    <input type="text" class="dialog-input" id="lastName" autocomplete="off" placeholder=" " required>
-    <label for="lastName" class="input-label">Last Name</label>
-  </div>
-  
-  <div class="input-group">
-    <input type="number" class="dialog-input" id="balance" placeholder=" " step="0.01" required>
-    <label for="balance" class="input-label">Balance</label>
-  </div>
-  
-  <div class="checkbox-container">
-    <input type="checkbox" class="checkbox-input" id="is-active" checked>
-    <label for="is-active" class="checkbox-label">Is active?</label>
-  </div>
-    </main>
-    
-    <footer class="dialog-footer">
-      <button class="dialog-btn dialog-btn-secondary">Cancelar</button>
-      <button class="dialog-btn dialog-btn-primary">Aceptar</button>
-    </footer>
+    <form novalidate>
+      <main class="dialog-content">
+        <div class="input-group">
+          <input type="text" class="dialog-input" id="firstName" autocomplete="off" placeholder=" " required>
+          <label for="firstName" class="input-label">First Name</label>
+        </div>
+        
+        <div class="input-group">
+          <input type="text" class="dialog-input" id="lastName" autocomplete="off" placeholder=" " required>
+          <label for="lastName" class="input-label">Last Name</label>
+        </div>
+        
+        <div class="input-group">
+          <input type="number" class="dialog-input" id="balance" placeholder=" " step="0.01" required>
+          <label for="balance" class="input-label">Balance</label>
+        </div>
+        
+        <div class="checkbox-container">
+          <input type="checkbox" class="checkbox-input" id="is-active" checked>
+          <label for="is-active" class="checkbox-label">Is active?</label>
+        </div>
+      </main>
+      
+      <footer class="dialog-footer">
+        <button class="dialog-btn dialog-btn-secondary">Cancelar</button>
+        <button class="dialog-btn dialog-btn-primary" type="submit">Aceptar</button>
+      </footer>
+    </form>
   </div>
 </dialog>
