@@ -28,7 +28,6 @@ const loadPreiousPage = async () => {
 	//termina si no hay usuarios
 	if ( users.length === 0 ) return;
 
-
 	//actualizar
 	state.currenPage = state.currenPage - 1;
 	state.users = users;	

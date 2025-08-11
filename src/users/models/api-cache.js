@@ -1,6 +1,13 @@
 
 class ApiCache 
 {
+	/*
+	static instance no es una palabra reservada ni tiene un significado especial. 
+	Es simplemente un nombre de propiedad estática que tú eliges 
+	para implementar el patrón Singleton. 
+	Podrías usar cualquier otro nombre válido, como _instance, singletonInstance
+	Usa static para que pertenezca a la clase (no a las instancias).
+	*/
 	static instance;
 	
 	/**

@@ -27,6 +27,8 @@ export const renderButtons = ( element ) => {
 	buttonsContainer.append(prevButton, currentPageLabel, nextButton);
 	element.append(buttonsContainer);
 
+	//--------------------------------------------------------------------
+
 	//evento click del boton next
 	nextButton.addEventListener('click', async () => {
 
@@ -41,6 +43,8 @@ export const renderButtons = ( element ) => {
 			renderTable(element);
 		}
 	});
+
+	//--------------------------------------------------------------------
 
 	//evento click del boton prev
 	prevButton.addEventListener('click', async () => {

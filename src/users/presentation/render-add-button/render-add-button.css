@@ -1,0 +1,36 @@
+.fab-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  background-color: #6a0ae7;
+  border-radius: 50%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: rgb(244, 242, 247);
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 24px;
+  font-weight: bold;
+  animation: pulse_alerta 2s ease-out 3; /* Se repite 3 veces */
+  animation-delay: 2s; /* Comienza después de 2 segundos */
+}
+
+@keyframes pulse_alerta {
+  0% {
+    box-shadow: 0 0 0 0 rgba(91, 40, 233, 0.7), 0 0 0 0 rgba(91, 40, 233, 0.7);
+  }
+  40% {
+    box-shadow: 0 0 0 35px rgba(255, 0, 64, 0), 0 0 0 0 rgba(91, 40, 233, 0.7);
+  }
+  80% {
+    box-shadow: 0 0 0 35px rgba(255, 0, 64, 0), 0 0 0 30px rgba(255, 0, 64, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 0, 64, 0), 0 0 0 30px rgba(255, 0, 64, 0);
+  }
+}
+

@@ -24,7 +24,7 @@ export const loadUsersByPage = async ( page = 1 ) => {
 		//crear un nuevo array de usuarios
 		const usersData = res.data.map( user => localhostUserToModel(user) );
 
-		// 2. Actualiza el caché con valores crudos
+		//Actualiza el caché con valores crudos
         apiCache.items = res.items;
         apiCache.last = res.last;
         apiCache.pages = res.pages;
