@@ -33,14 +33,14 @@ export class User
 	constructor( userData)
 	{
 		// Destructuración del objeto userData
-		const {	id, isActive, balance, avatar, firtsName, lastName, gender } = userData;
+		const {	id, isActive, balance, avatar, firstName, lastName, gender } = userData;
 		
 		// Asignación de propiedades a la instancia
 		this.id			= id;
 		this.isActive	= isActive;
 		this.balance	= balance;
 		this.avatar		= avatar;
-		this.firtsName	= firtsName;
+		this.firstName	= firstName;
 		this.lastName 	= lastName;
 		this.gender		= gender;
 	}

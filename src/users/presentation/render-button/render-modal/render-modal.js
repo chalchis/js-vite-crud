@@ -11,7 +11,7 @@ let dialogElement;
  * @returns 
  */
 //crear el dialog en el dom simplemente inicializado
-export const renderModal = ( element ) => {
+export const renderModal = ( element, callback ) => {
 
 	//si ya existe el modal, no lo volvemos a crear
 	if ( modalElement ) return;
@@ -29,7 +29,7 @@ export const renderModal = ( element ) => {
 	dialogElement = document.getElementById('myDialog');
 	
 	//eventos inicializa
-	setupModalEvents(dialogElement);
+	setupModalEvents(dialogElement, callback);
 };
 
 /**
@@ -51,7 +51,7 @@ export const showDialog = () => {
  * @returns 
  */
 //eventos del dialog
-const setupModalEvents = ( dialogElement ) => {
+const setupModalEvents = ( dialogElement, callback ) => {
 
 	//si no existe
 	if ( !dialogElement ) return;
@@ -107,18 +107,52 @@ const setupModalEvents = ( dialogElement ) => {
 			resetDialogInputs(dialogElement);
 
 			//metodo nativo para cerrar un dialog
-			dialogElement.close()
+			dialogElement.close();
 		}
 	});
 
 	//evento-----------------------------------------------------------
 
 	//evitar submit
-	formDialog.addEventListener('submit', (event) => {
+	formDialog.addEventListener('submit', async(event) => {
 
 		//evitar submit
 		event.preventDefault();
+
+		//data del form
+		const formData = new FormData( formDialog );
 		
+		//guadar los elementos del form
+		const userLike = {};
+
+		//iterar los elementos encontrados y destructuramos
+		for (const [key, value] of formData)
+		{
+			if ( key === 'balance')
+			{
+				console.log('balance');
+				//guardamos en el objeto userLike
+				userLike[key] = +value;//lo vuelve numero
+
+				continue;
+			}
+
+			if ( key === 'isActive' )
+			{
+				console.log('on');
+				//guardamos en el objeto userLike
+				userLike[key] = (value === 'on') ? true : false;
+
+				continue;
+			}
+
+			userLike[key] = value;
+		}
+
+		await callback( userLike );
+		
+		//metodo nativo para cerrar un dialog
+		dialogElement.close();
 	});
 };
 
@@ -129,5 +163,6 @@ const resetDialogInputs = ( dialogElement ) => {
 	dialogElement.querySelector('#firstName').value = '';
 	dialogElement.querySelector('#lastName').value = '';
 	dialogElement.querySelector('#balance').value = '';
+	dialogElement.querySelector('#is-active').checked = false;
 };
 

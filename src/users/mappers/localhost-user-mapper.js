@@ -21,7 +21,7 @@ export const localhostUserToModel = ( localhostUser ) => {
 	return new User({
 		avatar,
 		balance,
-		firtsName: first_name,
+		firstName: first_name,
 		gender,
 		id,
 		isActive,

@@ -19,7 +19,7 @@ const createTable = () => {
 		<tr>
 			<th>ID</th>
 			<th>Avatar</th>
-			<th>FirtsName</th>
+			<th>FirstName</th>
 			<th>LastName</th>
 			<th>Active</th>
 			<th>Actions</th>
@@ -59,9 +59,9 @@ export const renderTable = ( element ) => {
 		tableBody += `<tr>
 			<td>${ user.id }</td>
 			<td>
-				<div class="avatar" style="background-image: url('https://i.pravatar.cc/300/${user.firtsName}')"></div>
+				<div class="avatar" style="background-image: url('https://i.pravatar.cc/300/${user.firstName}')"></div>
 			</td>
-			<td>${ user.firtsName }</td>
+			<td>${ user.firstName }</td>
 			<td>${ user.lastName }</td>
 			<td>
 				${ user.isActive ? `<span class="active">Active</span>` : `<span class="inactive">Inactive</span>` }
