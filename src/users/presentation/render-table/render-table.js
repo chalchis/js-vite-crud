@@ -39,19 +39,24 @@ const createTable = () => {
  */
 export const renderTable = ( element ) => {
 
-	let tableBody = '';
-
+	console.log('entra a render table');
+	
 	//usuarios que tenemos en el store
 	const users = usersStore.getUsers();	
-
+	
 	//si no existe la tabla, crearla
 	if ( !table )
 	{
 		//crear la tabla
 		table = createTable();
 		element.append(table);
-	}
 
+		//eventos
+		setupEventos( table );
+	}
+		
+	let tableBody = '';
+	
 	//agregar los usuarios a la tabla
 	for (const user of users) 
 	{
@@ -67,13 +72,39 @@ export const renderTable = ( element ) => {
 				${ user.isActive ? `<span class="active">Active</span>` : `<span class="inactive">Inactive</span>` }
 			</td>
 			<td>
-				<a href="#/edit/${user.id}" class="edit-button">Edit</a> |
-				<a href="#/delete/${user.id}" class="delete-button">Delete</a>
+				<a data-id="${ user.id }" class="edit-button">Edit</a> |
+				<a data-id="${ user.id }" class="delete-button">Delete</a>
 			</td>
 		</tr>`;
 	}
 
 	//agregar el cuerpo a la tabla
 	table.querySelector('tbody').innerHTML = tableBody;
+};
+
+/**
+ * Configura los event listeners para los botones de la tabla.
+ * @param {HTMLTableElement} table - La tabla a la que se le asignarán los eventos.
+ */
+const setupEventos = (table) => {
+
+	//evento
+	table.addEventListener('click', (event) => {
+
+		const target = event.target;
+		const id = target.getAttribute('data-id');
+
+		if ( target.classList.contains('edit-button') ) 
+		{
+			console.log('Edit user with ID:', id);
+			// Lógica para editar (ej: `usersStore.selectUserForEdit(id)`)
+		}
+
+		if ( target.classList.contains('delete-button') ) 
+		{
+			console.log('Delete user with ID:', id);
+			// Lógica para eliminar (ej: `usersStore.removeUser(id)`)
+		}
+	});
 };
 

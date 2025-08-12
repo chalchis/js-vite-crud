@@ -5,8 +5,6 @@ import { renderTable } from "./presentation/render-table/render-table";
 import usersStore from "./store/users-store";
 import { saveUser } from "./use-cases/save-user";
 
-
-
 //ponemos en mayusculas el nombre de la funcion para indicar que es la principal de la app
 export const UsersApp = async( element ) => {
 
@@ -29,6 +27,15 @@ export const UsersApp = async( element ) => {
 	//carga el dialog en UI solo inicializa pero ya esta en el DOM
 	renderModal( element, async( userLike ) => {
 
-		const user = await saveUser( userLike );
+		 try 
+		 {
+			const user = await saveUser(userLike);
+			//usersStore.onUserChange(user);
+			renderTable();
+		} 
+		catch (error) 
+		{
+			console.error("Error en callback del modal:", error);
+		}
 	});
 };

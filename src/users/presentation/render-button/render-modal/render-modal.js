@@ -34,9 +34,10 @@ export const renderModal = ( element, callback ) => {
 
 /**
  * 
+ * @param {String|Number} id 
  */
 //poder mostrar el dialog desde otros archivos
-export const showDialog = () => {
+export const showDialog = ( id ) => {
 
 	//si no existe
 	if (!dialogElement)  throw new Error('Dialog no ha sido renderizado. Llama a renderModal() primero.');
@@ -130,7 +131,6 @@ const setupModalEvents = ( dialogElement, callback ) => {
 		{
 			if ( key === 'balance')
 			{
-				console.log('balance');
 				//guardamos en el objeto userLike
 				userLike[key] = +value;//lo vuelve numero
 
@@ -139,7 +139,6 @@ const setupModalEvents = ( dialogElement, callback ) => {
 
 			if ( key === 'isActive' )
 			{
-				console.log('on');
 				//guardamos en el objeto userLike
 				userLike[key] = (value === 'on') ? true : false;
 
@@ -163,6 +162,6 @@ const resetDialogInputs = ( dialogElement ) => {
 	dialogElement.querySelector('#firstName').value = '';
 	dialogElement.querySelector('#lastName').value = '';
 	dialogElement.querySelector('#balance').value = '';
-	dialogElement.querySelector('#is-active').checked = false;
+	dialogElement.querySelector('#isActive').checked = false;
 };
 

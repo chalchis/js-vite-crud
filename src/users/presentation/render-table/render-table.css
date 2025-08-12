@@ -33,3 +33,15 @@
     border-radius: 50%; /* Para forma circular */
     display: inline-block;
 }
+
+.custom-table  a {
+  color: rgb(9, 162, 223);       /* Color del texto en blanco */
+  cursor: pointer;    /* Cursor en forma de mano (como un enlace) */
+  text-decoration: none; /* Opcional: elimina el subrayado por defecto */
+}
+
+/* Opcional: Estilos para hover (cuando el mouse pasa por encima) */
+.custom-table  a:hover {
+  text-decoration: underline; /* Subraya al pasar el mouse (opcional) */
+  opacity: 0.8;              /* Ligera transparencia (opcional) */
+}

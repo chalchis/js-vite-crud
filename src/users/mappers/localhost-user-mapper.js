@@ -25,6 +25,6 @@ export const localhostUserToModel = ( localhostUser ) => {
 		gender,
 		id,
 		isActive,
-		lastName: last_name,
+		lastName: last_name
 	});
 };
