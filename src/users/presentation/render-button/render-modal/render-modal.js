@@ -1,9 +1,11 @@
 import './render-modal.css';
 // Importa el contenido HTML como un string literal, sin procesar
 import modalHtml from './render-modal.html?raw';
+import { getUserById } from '../../../use-cases/get-user-by-id';
 
 let modalElement;
 let dialogElement;
+let loadedUser;
 
 /**
  * 
@@ -37,10 +39,16 @@ export const renderModal = ( element, callback ) => {
  * @param {String|Number} id 
  */
 //poder mostrar el dialog desde otros archivos
-export const showDialog = ( id ) => {
+export const showDialog = async( id ) => {
 
 	//si no existe
 	if (!dialogElement)  throw new Error('Dialog no ha sido renderizado. Llama a renderModal() primero.');
+
+	//si hay id
+	if ( id )
+	{
+		const user = await getUserById( id );
+	}
 	
 	//metodo nativo para mostrar un dialog
 	dialogElement.showModal();
@@ -120,38 +128,48 @@ const setupModalEvents = ( dialogElement, callback ) => {
 		//evitar submit
 		event.preventDefault();
 
-		//data del form
-		const formData = new FormData( formDialog );
-		
-		//guadar los elementos del form
-		const userLike = {};
-
-		//iterar los elementos encontrados y destructuramos
-		for (const [key, value] of formData)
+		try
 		{
-			if ( key === 'balance')
+			//data del form
+			const formData = new FormData( formDialog );
+			
+			//guadar los elementos del form
+			const userLike = {};
+
+			//iterar los elementos encontrados y destructuramos
+			for (const [key, value] of formData)
 			{
-				//guardamos en el objeto userLike
-				userLike[key] = +value;//lo vuelve numero
+				if ( key === 'balance')
+				{
+					//guardamos en el objeto userLike
+					userLike[key] = +value;//lo vuelve numero
 
-				continue;
+					continue;
+				}
+
+				if ( key === 'isActive' )
+				{
+					//guardamos en el objeto userLike
+					userLike[key] = (value === 'on') ? true : false;
+
+					continue;
+				}
+
+				userLike[key] = value;
 			}
+			
+			//Esperar la operación asíncrona (API, base de datos, etc.)
+    		const resultado = await callback(userLike)
 
-			if ( key === 'isActive' )
-			{
-				//guardamos en el objeto userLike
-				userLike[key] = (value === 'on') ? true : false;
-
-				continue;
-			}
-
-			userLike[key] = value;
+			//Si todo sale bien, limpiar y cerrar
+			resetDialogInputs(dialogElement);
+			dialogElement.close();
 		}
-
-		await callback( userLike );
-		
-		//metodo nativo para cerrar un dialog
-		dialogElement.close();
+		catch(error)
+		{
+			//Manejo de errores
+			console.error('Error:', error);	
+		}
 	});
 };
 

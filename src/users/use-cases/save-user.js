@@ -10,7 +10,10 @@ export const saveUser = async( userLike ) => {
 	//instancia
 	const user = new User( userLike );
 
-	//falta un mapper
+	//validamos
+	if ( !user.firstName || !user.lastName ) throw 'Campos Vacios';
+
+	//mapper
 	const userToSave = userModelToLocalhost( user );
 
 	//verificamos si estamos editando al tener un id

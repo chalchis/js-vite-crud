@@ -1,6 +1,7 @@
 
 import './render-table.css';
 import usersStore from '../../store/users-store';
+import { showDialog } from '../render-button/render-modal/render-modal';
 
 
 // Variable para almacenar la tabla
@@ -98,6 +99,9 @@ const setupEventos = (table) => {
 		{
 			console.log('Edit user with ID:', id);
 			// Lógica para editar (ej: `usersStore.selectUserForEdit(id)`)
+
+			//mostrar el dialog
+			showDialog();
 		}
 
 		if ( target.classList.contains('delete-button') ) 
