@@ -25,8 +25,13 @@ export const UsersApp = async( element ) => {
 	renderAddButton( element );
 
 	//carga el dialog en UI solo inicializa pero ya esta en el DOM
-	renderModal( element, async( userLike ) => {
-
+	/*
+	Puntos clave
+	-El callback está en memoria desde el inicio, pero inactivo hasta que se usa el modal.
+	-Las funciones internas (saveUser, renderTable) también se guardan en el closure.
+	-No hay fugas de memoria (a menos que elimines el modal sin limpiar el event listener).
+	*/
+	renderModal( element, async( userLike ) => { 
 		 try 
 		 {
 			const user = await saveUser(userLike);
