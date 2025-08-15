@@ -16,20 +16,17 @@ export const getUserById = async ( id ) => {
 		}
 			
 		//data completa
-		const res = await response.json();
+		const data = await response.json();
 
-		console.log(res);
+		//mapper
+		const usersData = localhostUserToModel( data );
 
-		//clase
-		const usersData = localhostUserToModel(user);
-
-		//console.log('----Users loaded:', usersData);
+		console.log('----User loaded:', usersData);
 
 		return usersData;
 	}
 	catch (error)
 	{
-		console.error('Error loading users:', error);
-		throw error;
+		console.error('Error data user', error);
 	}
 };

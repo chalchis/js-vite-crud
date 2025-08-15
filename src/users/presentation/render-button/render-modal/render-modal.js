@@ -5,7 +5,7 @@ import { getUserById } from '../../../use-cases/get-user-by-id';
 
 let modalElement;
 let dialogElement;
-let loadedUser;
+let loadedUser = {};
 
 /**
  * 
@@ -41,6 +41,8 @@ export const renderModal = ( element, callback ) => {
 //poder mostrar el dialog desde otros archivos
 export const showDialog = async( id ) => {
 
+	loadedUser = {};
+
 	//si no existe
 	if (!dialogElement)  throw new Error('Dialog no ha sido renderizado. Llama a renderModal() primero.');
 
@@ -48,6 +50,13 @@ export const showDialog = async( id ) => {
 	if ( id )
 	{
 		const user = await getUserById( id );
+
+		console.log(user);
+
+		console.log(dialogElement);
+		
+		//llenar los campos
+		fillDialogInputs(dialogElement, user);
 	}
 	
 	//metodo nativo para mostrar un dialog
@@ -73,7 +82,7 @@ const setupModalEvents = ( dialogElement, callback ) => {
 	//evento-----------------------------------------------------------
 
 	// Cerrar diálogo
-    closeBtn.addEventListener('click', (event) => {
+	closeBtn.addEventListener('click', (event) => {
 
 		//resetar inputs
 		resetDialogInputs(dialogElement);
@@ -85,7 +94,7 @@ const setupModalEvents = ( dialogElement, callback ) => {
 	//evento-----------------------------------------------------------
 
 	// Cancelar diálogo
-    cancelBtn.addEventListener('click', (event) => {
+	cancelBtn.addEventListener('click', (event) => {
 
 		//resetar inputs
 		resetDialogInputs(dialogElement);
@@ -108,8 +117,8 @@ const setupModalEvents = ( dialogElement, callback ) => {
 	//hacer click fuera del dialog
 	dialogElement.addEventListener('click', (event) => {
 		
-    	// 1. El clic fue directamente en el elemento <dialog> (no en sus hijos) y
-    	// 2. El diálogo está actualmente abierto como modal
+		// 1. El clic fue directamente en el elemento <dialog> (no en sus hijos) y
+		// 2. El diálogo está actualmente abierto como modal
 		if (event.target === dialogElement && dialogElement.open)
 		{
 			//resetar inputs
@@ -125,6 +134,8 @@ const setupModalEvents = ( dialogElement, callback ) => {
 	//evitar submit
 	formDialog.addEventListener('submit', async(event) => {
 
+		console.log({antes: loadedUser});
+
 		//evitar submit
 		event.preventDefault();
 
@@ -132,12 +143,19 @@ const setupModalEvents = ( dialogElement, callback ) => {
 		{
 			//data del form
 			const formData = new FormData( formDialog );
+
+			const formDataObject = Object.fromEntries(formData.entries());
+			
+			// Asegurar que isActive sea booleano
+  			formDataObject.isActive = formData.has('isActive'); // true si está marcado, false si no
+			
+			console.log('Datos del formulario:', formDataObject);
 			
 			//guadar los elementos del form
-			const userLike = {};
+			const userLike = { ...loadedUser };	
 
 			//iterar los elementos encontrados y destructuramos
-			for (const [key, value] of formData)
+			for (const [key, value] of Object.entries(formDataObject))
 			{
 				if ( key === 'balance')
 				{
@@ -147,22 +165,27 @@ const setupModalEvents = ( dialogElement, callback ) => {
 					continue;
 				}
 
-				if ( key === 'isActive' )
-				{
-					//guardamos en el objeto userLike
-					userLike[key] = (value === 'on') ? true : false;
+				// if ( key === 'isActive' )
+				// {
+				// 	console.log({checkbox:value});
 
-					continue;
-				}
+				// 	//guardamos en el objeto userLike
+				// 	userLike[key] = (value === 'true') ? true : false;
+
+				// 	continue;
+				// }
 
 				userLike[key] = value;
 			}
+
+			console.log({despues: userLike});
 			
 			//Esperar la operación asíncrona (API, base de datos, etc.)
-    		const resultado = await callback(userLike)
+			const resultado = await callback(userLike)
 
 			//Si todo sale bien, limpiar y cerrar
 			resetDialogInputs(dialogElement);
+			
 			dialogElement.close();
 		}
 		catch(error)
@@ -171,6 +194,35 @@ const setupModalEvents = ( dialogElement, callback ) => {
 			console.error('Error:', error);	
 		}
 	});
+};
+
+//para rellenas los campos en el dialog
+const fillDialogInputs = ( dialogElement, user ) => {
+
+	//si no existen
+	if (!dialogElement || !user) return;
+
+	// Mapear los campos del usuario a los IDs de los inputs del modal
+	const inputs = {
+		firstName: dialogElement.querySelector('#firstName'),
+		lastName: dialogElement.querySelector('#lastName'),
+		balance: dialogElement.querySelector('#balance'),
+		isActive: dialogElement.querySelector('#isActive'),
+	};
+
+	// Asignar valores (si el campo existe en el usuario y en el modal)
+	if (inputs.firstName && user.firstName) inputs.firstName.value = user.firstName;
+	if (inputs.lastName && user.lastName) inputs.lastName.value = user.lastName;
+	if (inputs.balance && user.balance) inputs.balance.value = user.balance;
+	if (inputs.isActive && user.isActive !== undefined) 
+	{
+		console.log('fill campos' + user.isActive);
+		//inputs.isActive.value = user.isActive;
+		inputs.isActive.checked = Boolean(user.isActive); // Asegurar que es booleano
+	}
+
+	console.log({loaderEdit: user});
+	loadedUser = user
 };
 
 //resetear los campos del dialog

@@ -92,7 +92,10 @@ const setupEventos = (table) => {
 	//evento
 	table.addEventListener('click', (event) => {
 
+		//destino
 		const target = event.target;
+
+		//elemento con atributo data-algo
 		const id = target.getAttribute('data-id');
 
 		if ( target.classList.contains('edit-button') ) 
@@ -101,7 +104,7 @@ const setupEventos = (table) => {
 			// Lógica para editar (ej: `usersStore.selectUserForEdit(id)`)
 
 			//mostrar el dialog
-			showDialog();
+			showDialog( id );
 		}
 
 		if ( target.classList.contains('delete-button') ) 

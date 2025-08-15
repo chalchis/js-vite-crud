@@ -35,7 +35,9 @@ export const UsersApp = async( element ) => {
 		 try 
 		 {
 			const user = await saveUser(userLike);
-			//usersStore.onUserChange(user);
+			
+			usersStore.onUserChange(user);
+			
 			renderTable();
 		} 
 		catch (error) 

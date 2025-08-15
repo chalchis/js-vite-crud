@@ -1,5 +1,6 @@
 import { User } from "../models/user";
 import { userModelToLocalhost } from "../mappers/user-to-localhost-mapper";
+import { localhostUserToModel } from "../mappers/localhost-user-mapper";
 
 /**
  * 
@@ -16,17 +17,25 @@ export const saveUser = async( userLike ) => {
 	//mapper
 	const userToSave = userModelToLocalhost( user );
 
+	let userUpdated;
+
 	//verificamos si estamos editando al tener un id
 	if ( user.id )
 	{
-		throw 'Actualización no implementada';
-		return;
+		console.log('update');
+
+		//si pasa por aca es para actualizar el usuario
+		userUpdated = await updateUser( userToSave );
+
+		console.log({algo: userUpdated});
+	}
+	else
+	{
+		//si pasa por aca es para crear un nuevo usuario 
+		userUpdated = await createUser ( userToSave );
 	}
 
-	//si pasa por aca es para crear un nuevo usuario 
-	const updateUser = await createUser ( userToSave );
-
-	return updateUser;
+	return localhostUserToModel( userUpdated );
 };
 
 /**
@@ -37,7 +46,7 @@ const createUser = async( data ) => {
 
 	const url = `${ import.meta.env.VITE_BASE_URL }/users`;
 
-	console.log(data);
+	console.log('guardando:'. data);
 
 	try
 	{
@@ -70,4 +79,45 @@ const createUser = async( data ) => {
 	{
 		console.error('Error al enviar los datos:', error);
 	}
+};
+
+//actualizar usuario
+const updateUser = async( user ) => {
+
+	const url = `${ import.meta.env.VITE_BASE_URL }/users/${ user.id }`;
+
+	console.log({actualizado: user});
+
+	try
+	{
+		const response = await fetch(url, {
+			method: 'PATCH', //GET, POST, PUT, DELETE, etc.
+			//mode: 'same-origin', // no-cors, cors, *same-origin
+			//credentials: 'same-origin', // include, same-origin, *omit
+			cache: 'no-cache', //default, no-cache, reload, force-cache, only-if-cached
+			redirect: 'follow', // manual, *follow, error
+			referrer: 'no-referrer', //client, no-referrer
+			headers: { 
+				Accept: 'application/json', 'Content-Type': 'application/json' 
+			},
+			body: JSON.stringify(user) // must match 'Content-Type' header
+		});
+
+		//verificar respuesta
+		if ( !response.ok ) 
+		{
+			throw new Error(`Error: ${response.status}`);
+		}
+
+		const updUser = await response.json();
+
+		console.log(updUser);
+
+		return updUser;
+	}
+	catch(error)
+	{
+
+	}
+
 };

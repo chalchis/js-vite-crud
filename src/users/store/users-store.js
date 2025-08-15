@@ -33,11 +33,40 @@ const loadPreiousPage = async () => {
 	state.users = users;	
 };
 
-const onUserChange = () => {
+//al haber una edicion
+const onUserChange = ( updateUser ) => {
 
-	throw new Error('loadNextPage function not implemented');
+	let wasFound = false;
+
+	//recorremos los usuarios que en este momento tiene users y
+	//volvemos a llenar users del objeto state
+	state.users = state.users.map( user => {
+
+		//comparar
+		if ( user.id === updateUser.id )
+		{
+			//bandera
+			wasFound = true;
+
+			//data
+			return updateUser;
+		}
+
+		//data
+		return user;
+	});
+
+	//cada pagina muestra 10 usuarios
+	//si tenemos < de 10 podriamos añadir ese usuario y la tabla podra mostrar un registro mas
+	//es decir si se tienen 8 registros visibles ya seran nueve
+	if ( state.users.length < 10 && wasFound )
+	{
+		state.users.push( updateUser );
+	}
+
 };
 
+//------------------------
 const reloadPage = async () => {
 
 };
