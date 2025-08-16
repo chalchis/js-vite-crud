@@ -145,8 +145,8 @@ const setupModalEvents = ( dialogElement, callback ) => {
 			const formData = new FormData( formDialog );
 
 			const formDataObject = Object.fromEntries(formData.entries());
-			
-			// Asegurar que isActive sea booleano
+
+			// Asegura que el campo isActive siempre esté en el objeto como true o false.
   			formDataObject.isActive = formData.has('isActive'); // true si está marcado, false si no
 			
 			console.log('Datos del formulario:', formDataObject);
