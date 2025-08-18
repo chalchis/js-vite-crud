@@ -1,5 +1,6 @@
 import { localhostUserToModel } from "../mappers/localhost-user-mapper";
 import { apiCache } from "../models/api-cache";
+import usersStore from "../store/users-store";
 
 export const loadUsersByPage = async ( page = 1 ) => {
 
@@ -29,7 +30,8 @@ export const loadUsersByPage = async ( page = 1 ) => {
         apiCache.last = res.last;
         apiCache.pages = res.pages;
 
-		//console.log('----Users loaded:', usersData);
+		console.log('----Users loaded:', usersData);
+		usersData.ultimaPag = res.prev;
 
 		return usersData;
 	}

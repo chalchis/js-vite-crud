@@ -147,7 +147,7 @@ const setupModalEvents = ( dialogElement, callback ) => {
 			const formDataObject = Object.fromEntries(formData.entries());
 
 			// Asegura que el campo isActive siempre esté en el objeto como true o false.
-  			formDataObject.isActive = formData.has('isActive'); // true si está marcado, false si no
+  			formDataObject.isActive = formData.has('isActive') ? true : false; // true si está marcado, false si no
 			
 			console.log('Datos del formulario:', formDataObject);
 			
@@ -216,9 +216,9 @@ const fillDialogInputs = ( dialogElement, user ) => {
 	if (inputs.balance && user.balance) inputs.balance.value = user.balance;
 	if (inputs.isActive && user.isActive !== undefined) 
 	{
-		console.log('fill campos' + user.isActive);
+		console.log('fill campos ' + user.isActive);
 		//inputs.isActive.value = user.isActive;
-		inputs.isActive.checked = Boolean(user.isActive); // Asegurar que es booleano
+		inputs.isActive.checked = user.isActive; // Asegurar que es booleano
 	}
 
 	console.log({loaderEdit: user});

@@ -2,6 +2,7 @@
 import './render-table.css';
 import usersStore from '../../store/users-store';
 import { showDialog } from '../render-button/render-modal/render-modal';
+import { deleteUserById } from '../../use-cases/delete-user-by-id';
 
 
 // Variable para almacenar la tabla
@@ -57,6 +58,8 @@ export const renderTable = ( element ) => {
 	}
 		
 	let tableBody = '';
+
+	console.log({users});
 	
 	//agregar los usuarios a la tabla
 	for (const user of users) 
@@ -70,7 +73,7 @@ export const renderTable = ( element ) => {
 			<td>${ user.firstName }</td>
 			<td>${ user.lastName }</td>
 			<td>
-				${ user.isActive ? `<span class="active">Active</span>` : `<span class="inactive">Inactive</span>` }
+				${ user.isActive === true ? `<span class="active">Active</span>` : `<span class="inactive">Inactive</span>` }
 			</td>
 			<td>
 				<a data-id="${ user.id }" class="edit-button">Edit</a> |
@@ -90,7 +93,7 @@ export const renderTable = ( element ) => {
 const setupEventos = (table) => {
 
 	//evento
-	table.addEventListener('click', (event) => {
+	table.addEventListener('click', async(event) => {
 
 		//destino
 		const target = event.target;
@@ -109,8 +112,22 @@ const setupEventos = (table) => {
 
 		if ( target.classList.contains('delete-button') ) 
 		{
-			console.log('Delete user with ID:', id);
-			// Lógica para eliminar (ej: `usersStore.removeUser(id)`)
+			try
+			{
+				console.log('Delete user with ID:', id);
+				
+				await deleteUserById( id );
+
+				await usersStore.reloadPage();
+
+				//document.querySelector('#current-page').innerText = usersStore.getCurrentPage();
+
+				renderTable();
+			}
+			catch(error)
+			{
+				console.error("Error al eliminar:", error);
+			}
 		}
 	});
 };

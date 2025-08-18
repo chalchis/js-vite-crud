@@ -45,9 +45,7 @@ export const saveUser = async( userLike ) => {
 const createUser = async( data ) => {
 
 	const url = `${ import.meta.env.VITE_BASE_URL }/users`;
-
-	console.log('guardando:'. data);
-
+	
 	try
 	{
 		const response = await fetch(url, {
@@ -71,7 +69,7 @@ const createUser = async( data ) => {
 
 		const newUser = await response.json();
 
-		console.log(newUser);
+		console.log({nuevo: newUser});
 
 		return newUser;
 	}
@@ -117,7 +115,6 @@ const updateUser = async( user ) => {
 	}
 	catch(error)
 	{
-
+		console.error('Error al actualizar los datos:', error);
 	}
-
 };

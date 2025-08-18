@@ -19,22 +19,28 @@ const loadNextPage = async () => {
 
 const loadPreiousPage = async () => {
 
+	console.log('llamando a loadPreiousPage');
+
 	//termina si estamos en la primera pagina
-	if ( state.currenPage <= 1 ) return;
+	if ( state.currenPage === 1 ) return;
 
 	//cargar usuarios
 	const users = await loadUsersByPage( state.currenPage - 1 );
 
 	//termina si no hay usuarios
-	if ( users.length === 0 ) return;
+	//if ( users.length === 0 ) return;
 
 	//actualizar
+	state.users = users;
 	state.currenPage = state.currenPage - 1;
-	state.users = users;	
+
+	console.log(`pagina a cargar: ${ state.currenPage }`);
 };
 
 //al haber una edicion
 const onUserChange = ( updateUser ) => {
+
+	console.log({update: state.users});
 
 	let wasFound = false;
 
@@ -62,13 +68,20 @@ const onUserChange = ( updateUser ) => {
 	if ( state.users.length < 10 && wasFound )
 	{
 		state.users.push( updateUser );
-	}
 
+		console.log({renderizado: state.users});
+	}
 };
 
 //------------------------
 const reloadPage = async () => {
 
+	console.log('haciendo reload');
+	
+	const users = await loadUsersByPage( state.currenPage );
+	
+	//actualizar
+	state.users = users;	
 };
 
 export default { 
